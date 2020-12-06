@@ -7,8 +7,8 @@ import (
 type BlanceBankHistory struct {
 	ID            uint64    `json:"id"`
 	BalanceBankID uint64    `json:"balance_bank_id"`
-	BalanceBefore uint64    `json:"balance_before"`
-	BalanceAfter  uint64    `json:"balance_after"`
+	BalanceBefore int       `json:"balance_before"`
+	BalanceAfter  int       `json:"balance_after"`
 	Activity      string    `json:"activity"`
 	Type          string    `json:"type"`
 	IP            string    `json:"ip"`

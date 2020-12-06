@@ -7,8 +7,8 @@ import (
 type UserBalance struct {
 	ID                 uint64 `gorm:"primary_key;auto_increment" json:"id"`
 	UserID             uint64 `gorm:"size:255;not null;unique" json:"user_id"`
-	Balance            uint64 `gorm:"size:100;not null;unique" json:"email"`
-	BalanceAchieve     uint64 `gorm:"size:100;not null;" json:"password"`
+	Balance            int    `gorm:"size:100;not null;unique" json:"email"`
+	BalanceAchieve     int    `gorm:"size:100;not null;" json:"password"`
 	UserBalanceHistory UserBalanceHistory
 	CreatedAt          time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt          time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
@@ -23,7 +23,10 @@ func (UserBalance) TableName() string {
 }
 
 func (s *Server) UpdateUserBalance(userBalance *UserBalance) *UserBalance {
-	topUp := s.DB.Debug().Model(&userBalance).Update("balance", userBalance.Balance)
+	topUp := s.DB.Debug().Model(&userBalance).Where("user_id = ?", userBalance.UserID).Updates(UserBalance{
+		Balance:        userBalance.Balance,
+		BalanceAchieve: userBalance.Balance,
+	})
 	if topUp != nil {
 		return userBalance
 	}

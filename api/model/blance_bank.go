@@ -6,8 +6,8 @@ import (
 
 type BlanceBank struct {
 	ID             uint64    `json:"id"`
-	Balance        uint64    `json:"balance"`
-	BalanceAchieve uint64    `json:"balance_achieve"`
+	Balance        int       `json:"balance"`
+	BalanceAchieve int       `json:"balance_achieve"`
 	Code           string    `json:"code"`
 	Enable         string    `json:"enable"`
 	CreatedAt      time.Time `json:"created_at"`
@@ -33,7 +33,7 @@ func (s *Server) GetBankByID(bankid uint64) (*BlanceBank, error) {
 }
 
 func (s *Server) UpdateBankBalance(blanceBank *BlanceBank) *BlanceBank {
-	topUp := s.DB.Debug().Model(&blanceBank).Update("balance", blanceBank.Balance)
+	topUp := s.DB.Debug().Model(&blanceBank).Where("user_id = ?", blanceBank.ID).Update("balance", blanceBank.Balance)
 	if topUp != nil {
 		return blanceBank
 	}

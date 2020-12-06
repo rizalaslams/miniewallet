@@ -19,8 +19,18 @@ type User struct {
 }
 
 type TopUp struct {
-	Nominal   uint64 `json:"nominal"`
+	Nominal   int    `json:"nominal"`
 	IdBank    uint64 `json:"id_bank"`
+	Type      string `json:"type"`
+	IP        string `json:"ip"`
+	Location  string `json:"location"`
+	UserAgent string `json:"user_agent"`
+	Author    string `json:"author"`
+}
+
+type Transfer struct {
+	Nominal   int    `json:"nominal"`
+	ToUser    uint64 `json:"to_user"`
 	Type      string `json:"type"`
 	IP        string `json:"ip"`
 	Location  string `json:"location"`

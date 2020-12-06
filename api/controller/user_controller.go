@@ -75,3 +75,74 @@ func TopUpBalance(c *gin.Context) {
 
 	c.JSON(http.StatusOK, "top up berhasil")
 }
+
+func Transfer(c *gin.Context) {
+	var tr model.Transfer
+	if err := c.ShouldBindJSON(&tr); err != nil {
+		log.Println(&tr)
+		c.JSON(http.StatusUnprocessableEntity, &tr)
+		return
+	}
+
+	// extract bearer token
+	au, err := auth.ExtractTokenAuth(c.Request)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, "unauthorized")
+		return
+	}
+
+	// get user balance sender
+	balance_sender, err := model.Model.GetUserBalance(au.UserId)
+	// get user balance receiver
+	balance_receiver, err := model.Model.GetUserBalance(tr.ToUser)
+
+	// check user balance
+	if balance_sender.Balance < tr.Nominal {
+		c.JSON(http.StatusUnprocessableEntity, "Saldo tidak mencukupi")
+		return
+	}
+
+	// record transfer sender
+	var ubs model.UserBalance
+	ubs.UserID = au.UserId
+	var sb = balance_sender.Balance - tr.Nominal
+	ubs.Balance = sb
+	ubs.BalanceAchieve = sb
+	model.Model.UpdateUserBalance(&ubs)
+
+	// record transfer receiver
+	var ubr model.UserBalance
+	ubr.UserID = tr.ToUser
+	var rb = balance_receiver.Balance + tr.Nominal
+	ubr.Balance = rb
+	ubr.BalanceAchieve = rb
+	model.Model.UpdateUserBalance(&ubr)
+
+	// record user balance history sender
+	var ubhs model.UserBalanceHistory
+	ubhs.UserBalanceID = balance_sender.ID
+	ubhs.BalanceBefore = balance_sender.Balance
+	ubhs.BalanceAfter = sb
+	ubhs.Activity = "Transfer"
+	ubhs.Type = tr.Type
+	ubhs.IP = tr.IP
+	ubhs.Location = tr.Location
+	ubhs.UserAgent = tr.UserAgent
+	ubhs.Author = tr.Author
+	model.Model.CreateUserBalanceHistory(&ubhs)
+
+	// record user balance history sender
+	var ubhr model.UserBalanceHistory
+	ubhr.UserBalanceID = balance_receiver.ID
+	ubhr.BalanceBefore = balance_receiver.Balance
+	ubhr.BalanceAfter = rb
+	ubhr.Activity = "Transfer"
+	ubhr.Type = tr.Type
+	ubhr.IP = tr.IP
+	ubhr.Location = tr.Location
+	ubhr.UserAgent = tr.UserAgent
+	ubhr.Author = tr.Author
+	model.Model.CreateUserBalanceHistory(&ubhr)
+
+	c.JSON(http.StatusOK, "transfer berhasil")
+}

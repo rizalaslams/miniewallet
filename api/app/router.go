@@ -12,4 +12,5 @@ func route() {
 	router.POST("/logout", middlewares.TokenAuthMiddleware(), controller.LogOut)
 
 	router.POST("/topup", middlewares.TokenAuthMiddleware(), controller.TopUpBalance)
+	router.POST("/transfer", middlewares.TokenAuthMiddleware(), controller.Transfer)
 }
