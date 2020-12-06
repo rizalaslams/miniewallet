@@ -25,6 +25,7 @@ $ apt-get install -y migrate
 
 - Start postgres
 - Create miniewallet database
+- Update .env file
 - Run db migration:
 
     ```bash
