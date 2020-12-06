@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "45c447c6-0ab6-468e-9a30-04a0783e2a2b",
+		"name": "mini e-wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{server}}:8888",
+					"host": [
+						"{{server}}"
+					],
+					"port": "8888"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6bfae3a5-4cc9-4a24-bc41-e8501d314367",
+						"exec": [
+							"var token = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"bearerToken\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user1@test.com\",\r\n    \"password\": \"112233aa\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"rizalaslam\",\r\n    \"email\": \"rizalaslams@gmail.com\",\r\n    \"password\": \"112233aa\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33a437c0-917f-4b84-9a88-b834af82176e",
+						"exec": [
+							"postman.setEnvironmentVariable(\"bearerToken\", \"\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/logout",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TopUp",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nominal\": 100000,\r\n    \"id_bank\": 2,\r\n    \"type\": \"debit\",\r\n    \"ip\": \"127.0.0.1\",\r\n    \"location\": \"kebumen\",\r\n    \"user_agent\": \"chrome\",\r\n    \"author\": \"rizalaslam\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/topup",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"topup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nominal\": 10000,\r\n    \"to_user\": 2,\r\n    \"type\": \"debit\",\r\n    \"ip\": \"sadfsadf\",\r\n    \"location\": \"kebumen\",\r\n    \"user_agent\": \"chrome\",\r\n    \"author\": \"rizalaslam\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/transfer",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "159f7b30-39d1-413e-babd-eecef72214a7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "eb068dee-784b-476d-8831-03e5f974986b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "e605f7c2-77db-43a0-ba14-b3f098741c81",
+			"key": "bearerToken",
+			"value": ""
+		},
+		{
+			"id": "ce68bf72-48a5-4ea1-9b5b-43540fb6fadd",
+			"key": "url",
+			"value": "http://127.0.0.1:8888"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
