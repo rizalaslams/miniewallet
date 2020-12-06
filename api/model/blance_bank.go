@@ -33,7 +33,7 @@ func (s *Server) GetBankByID(bankid uint64) (*BlanceBank, error) {
 }
 
 func (s *Server) UpdateBankBalance(blanceBank *BlanceBank) *BlanceBank {
-	topUp := s.DB.Debug().Model(&blanceBank).Where("user_id = ?", blanceBank.ID).Update("balance", blanceBank.Balance)
+	topUp := s.DB.Debug().Model(&blanceBank).Where("id = ?", blanceBank.ID).Update("balance", blanceBank.Balance)
 	if topUp != nil {
 		return blanceBank
 	}
