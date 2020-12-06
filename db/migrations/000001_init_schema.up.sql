@@ -55,7 +55,7 @@ CREATE TABLE "blance_bank" (
 
 CREATE TABLE "blance_bank_history" (
   "id" SERIAL PRIMARY KEY,
-  "blance_bank_id" integer,
+  "balance_bank_id" integer,
   "balance_before" integer,
   "balance_after" integer,
   "activity" varchar(100),
