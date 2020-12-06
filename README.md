@@ -44,7 +44,6 @@ $ apt-get install -y migrate
 You can get postman collection [here](https://github.com/rizalaslams/miniewallet/blob/master/mini%20e-wallet.postman_collection.json).
 
 ## Other
-------------
 `Mini e-Wallet` based on following plugins or services:
 
 + [Gin](https://github.com/gin-gonic/gin)
