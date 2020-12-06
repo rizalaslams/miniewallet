@@ -44,3 +44,13 @@ $ apt-get install -y migrate
     ```bash
     https://github.com/rizalaslams/miniewallet/blob/master/mini%20e-wallet.postman_collection.json
     ```
+
+## Other
+------------
+`Mini e-Wallet` based on following plugins or services:
+
++ [Gin](https://github.com/gin-gonic/gin)
++ [GORM](github.com/jinzhu/gorm)
++ [jwt-go](github.com/dgrijalva/jwt-go)
++ [GoDotEnv ](github.com/joho/godotenv)
++ and other
