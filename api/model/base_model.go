@@ -68,11 +68,13 @@ func (s *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName
 
 	var users_balance = []UserBalance{
 		{
+			ID:             1,
 			UserID:         1,
 			Balance:        0,
 			BalanceAchieve: 0,
 		},
 		{
+			ID:             2,
 			UserID:         2,
 			Balance:        0,
 			BalanceAchieve: 0,
@@ -97,7 +99,11 @@ func (s *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName
 	}
 
 	for i, _ := range users {
-		users[i].Password = "adsad"
+		hashedPassword, err := Hash(users[i].Password)
+		if err != nil {
+			return nil, err
+		}
+		users[i].Password = string(hashedPassword)
 		err = s.DB.Debug().Model(User{}).FirstOrCreate(&users[i]).Error
 	}
 
