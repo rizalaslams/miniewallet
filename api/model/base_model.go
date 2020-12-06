@@ -26,6 +26,17 @@ type modelInterface interface {
 	CreateUser(*User) (*User, error)
 	GetUserByEmail(string) (*User, error)
 
+	//bank methods
+	GetBankByID(uint64) (*BlanceBank, error)
+	UpdateBankBalance(*BlanceBank) *BlanceBank
+	CreateBankBalanceHistory(*BlanceBankHistory) *BlanceBankHistory
+
+	//topup methods:
+	GetUserBalance(uint64) (*UserBalance, error)
+	UpdateUserBalance(*UserBalance) *UserBalance
+	CreateUserBalanceHistory(*UserBalanceHistory) *UserBalanceHistory
+	CountUserBalanceHistory(uint64) int64
+
 	//auth methods:
 	FetchAuth(*auth.AuthDetails) (*Auth, error)
 	DeleteAuth(*auth.AuthDetails) error

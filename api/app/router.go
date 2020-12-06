@@ -10,4 +10,6 @@ func route() {
 	router.POST("/register", controller.CreateUser)
 	router.POST("/login", controller.Login)
 	router.POST("/logout", middlewares.TokenAuthMiddleware(), controller.LogOut)
+
+	router.POST("/topup", middlewares.TokenAuthMiddleware(), controller.TopUpBalance)
 }
