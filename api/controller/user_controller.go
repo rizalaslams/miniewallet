@@ -23,6 +23,13 @@ func TopUpBalance(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "unauthorized")
 		return
 	}
+	var er error
+	unauth, er := model.Model.FetchAuth(au)
+	if er != nil {
+		log.Println(unauth)
+		c.JSON(http.StatusUnauthorized, "unauthorized")
+		return
+	}
 
 	// get user balance
 	balance, err := model.Model.GetUserBalance(au.UserId)
@@ -87,6 +94,13 @@ func Transfer(c *gin.Context) {
 	// extract bearer token
 	au, err := auth.ExtractTokenAuth(c.Request)
 	if err != nil {
+		c.JSON(http.StatusUnauthorized, "unauthorized")
+		return
+	}
+	var er error
+	unauth, er := model.Model.FetchAuth(au)
+	if er != nil {
+		log.Println(unauth)
 		c.JSON(http.StatusUnauthorized, "unauthorized")
 		return
 	}
