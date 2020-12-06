@@ -53,20 +53,60 @@ func (s *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName
 
 	var users = []User{
 		{
+			ID:       1,
 			Username: "User 1",
 			Email:    "user1@test.com",
 			Password: "112233aa",
 		},
 		{
+			ID:       2,
 			Username: "User 2",
 			Email:    "user2@test.com",
 			Password: "112233aa",
 		},
 	}
 
+	var users_balance = []UserBalance{
+		{
+			UserID:         1,
+			Balance:        0,
+			BalanceAchieve: 0,
+		},
+		{
+			UserID:         2,
+			Balance:        0,
+			BalanceAchieve: 0,
+		},
+	}
+
+	var blance_bank = []BlanceBank{
+		{
+			ID:             1,
+			Balance:        10000000,
+			BalanceAchieve: 10000000,
+			Code:           "BRI",
+			Enable:         "TRUE",
+		},
+		{
+			ID:             2,
+			Balance:        10000000,
+			BalanceAchieve: 10000000,
+			Code:           "BCA",
+			Enable:         "TRUE",
+		},
+	}
+
 	for i, _ := range users {
 		users[i].Password = "adsad"
 		err = s.DB.Debug().Model(User{}).FirstOrCreate(&users[i]).Error
+	}
+
+	for i, _ := range users_balance {
+		err = s.DB.Debug().Model(UserBalance{}).FirstOrCreate(&users_balance[i]).Error
+	}
+
+	for i, _ := range blance_bank {
+		err = s.DB.Debug().Model(BlanceBank{}).FirstOrCreate(&blance_bank[i]).Error
 	}
 
 	return s.DB, nil

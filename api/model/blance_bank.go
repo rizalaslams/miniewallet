@@ -9,6 +9,7 @@ type BlanceBank struct {
 	Balance        uint64    `json:"balance"`
 	BalanceAchieve uint64    `json:"balance_achieve"`
 	Code           string    `json:"code"`
+	Enable         string    `json:"enable"`
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
 }
