@@ -41,8 +41,7 @@ $ apt-get install -y migrate
     ```
 
 ### Postman Collection
-
-    You can get postman collection [here](https://github.com/rizalaslams/miniewallet/blob/master/mini%20e-wallet.postman_collection.json).
+You can get postman collection [here](https://github.com/rizalaslams/miniewallet/blob/master/mini%20e-wallet.postman_collection.json).
 
 ## Other
 ------------
