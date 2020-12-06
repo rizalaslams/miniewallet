@@ -72,7 +72,7 @@ ALTER TABLE "user_balance" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
 ALTER TABLE "user_balance_history" ADD FOREIGN KEY ("user_balance_id") REFERENCES "user_balance" ("id");
 
-ALTER TABLE "blance_bank_history" ADD FOREIGN KEY ("blance_bank_id") REFERENCES "blance_bank" ("id");
+ALTER TABLE "blance_bank_history" ADD FOREIGN KEY ("balance_bank_id") REFERENCES "blance_bank" ("id");
 
 CREATE UNIQUE INDEX ON "user" ("username");
 
