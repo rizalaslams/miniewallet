@@ -22,16 +22,9 @@ type modelInterface interface {
 
 	//user methods
 	ValidateEmail(string) error
+	VerifyPassword(string, string) error
 	CreateUser(*User) (*User, error)
 	GetUserByEmail(string) (*User, error)
-
-	//bank methods
-	GetBankByID(uint64) (*BlanceBank, error)
-
-	//topup methods:
-	CreateUserBalance(*UserBalance) *UserBalance
-	CreateUserBalanceHistory(*UserBalanceHistory) *UserBalanceHistory
-	CountTopUp(uint64) int64
 
 	//auth methods:
 	FetchAuth(*auth.AuthDetails) (*Auth, error)
@@ -45,6 +38,24 @@ func (s *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName
 	s.DB, err = gorm.Open(Dbdriver, DBURL)
 	if err != nil {
 		return nil, err
+	}
+
+	var users = []User{
+		{
+			Username: "User 1",
+			Email:    "user1@test.com",
+			Password: "112233aa",
+		},
+		{
+			Username: "User 2",
+			Email:    "user2@test.com",
+			Password: "112233aa",
+		},
+	}
+
+	for i, _ := range users {
+		users[i].Password = "adsad"
+		err = s.DB.Debug().Model(User{}).FirstOrCreate(&users[i]).Error
 	}
 
 	return s.DB, nil
